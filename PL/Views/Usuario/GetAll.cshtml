@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-between">
+    <div class="col-4">
+        <input type="text" class="btn btn-success" id="agregar" value="Agregar" onclick="Agregar()">
+    </div>
+    <div class="col-4">
+        <input type="text" class="btn btn-info" id="Limpiar" value="Limpiar" onclick="Clear()">
+    </div>
+</div>
+
+<table id="dtHorizontalVerticalExample" class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <td class="text-center" style="font-weight:bold;">Nombre</td>
+            <td class="text-center" style="font-weight:bold;">Email</td>
+            <td class="text-center" style="font-weight:bold;">Direccion</td>
+            <td class="text-center" style="font-weight:bold;">Sexo</td>
+            <td class="text-center" style="font-weight:bold;">Foto</td>
+        </tr>
+    </thead>
+    <tbody id="body">
+        
+    </tbody>
+</table> 
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+<script type="text/javascript">
+    function Agregar() {
+        $.ajax({
+            type: "GET",
+            url: 'https://randomuser.me/api/',
+            dataType: 'json',
+            success: function (data) {
+                document.querySelector("#body").innerHTML +=
+                    "<tr>" +
+                    "<td class='text-center' style='font-weight:bold;'>" + data.results[0].name.first + "</td>" +
+                    "<td class='text-center' style='font-weight:bold;'>" + data.results[0].email + "</td>" +
+                    "<td class='text-center' style='font-weight:bold;'>" + data.results[0].location.street.name + "</td>" +
+                    "<td class='text-center' style='font-weight:bold;'>" + data.results[0].gender + "</td>" +
+                    "<td class='text-center' style='font-weight:bold;'>" + "<img src=" + data.results[0].picture.medium + ">" + "</td>" +
+                    "</tr>";
+            }
+        });
+    }
+    function Clear() {
+        document.querySelector("#body").innerHTML = "";
+    }
+</script>
